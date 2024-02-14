@@ -2,6 +2,7 @@ const express=require('express')
 const bodyParser=require('body-parser')
 const cors=require('cors')
 const mongoose = require('mongoose')
+//const{ObjectId}=require('mongoose')
 const{Restaurant,Users} = require('./schema.cjs')
 const app=express()
 app.use(bodyParser.json())
@@ -57,6 +58,33 @@ app.get('/get-restaurant-details',async function(request,response){
 
     }
 })
+app.delete('/delete-restaurant-detail/:id', async function(request, response) {
+    try {
+        const restaurant = await Restaurant.findById(request.params.id)
+       if(restaurant){
+        await Restaurant.findByIdAndDelete(request.params.id)
+        response.status(200).json({
+        "status":"success",
+        "message":"deleted successfully"
+        
+        })
+    } else{
+        
+        response.status(404).json({
+            "status":"failure",
+            "message":"entry not found"
+        })
+    }
+}
+catch (error) {
+        response.status(500).json({
+            "status":"failure",
+            "message": "Entry not found",
+            "error":error
+        })
+    }
+
+})
 app.post('/create-new-user', async function(request, response) {
     try {
         await Users.create({
@@ -77,6 +105,30 @@ app.post('/create-new-user', async function(request, response) {
     }
 })
 app.post('/validate-user', async function(request, response) {
+    try {
+        const user = await Users.findOne({
+            "email": request.body.email,
+            "password": request.body.password
+        })
+        if (user) {
+            response.status(200).json({
+                "messsage": "valid user"
+            })
+
+        } else {
+            response.status(401).json({
+                "message": "invalid user"
+            })
+        }
+
+    } catch (error) {
+        response.status(500).json({
+            "message": "Internal server error"
+        })
+    }
+
+})
+app.post('/update-restaurant-detail', async function(request, response) {
     try {
         const user = await Users.findOne({
             "email": request.body.email,
