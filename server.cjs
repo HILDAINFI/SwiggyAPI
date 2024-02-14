@@ -128,27 +128,3 @@ app.post('/validate-user', async function(request, response) {
     }
 
 })
-app.post('/update-restaurant-detail', async function(request, response) {
-    try {
-        const user = await Users.findOne({
-            "email": request.body.email,
-            "password": request.body.password
-        })
-        if (user) {
-            response.status(200).json({
-                "messsage": "valid user"
-            })
-
-        } else {
-            response.status(401).json({
-                "message": "invalid user"
-            })
-        }
-
-    } catch (error) {
-        response.status(500).json({
-            "message": "Internal server error"
-        })
-    }
-
-})
