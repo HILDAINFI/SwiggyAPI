@@ -24,12 +24,13 @@ connectToDb()
 app.post('/add-restaurants',async function(request,response){
   
     try{
-Restaurant.create({
+await Restaurant.create({
     "areaName ":request.body.areaName,
-    "CostForTwo":request.body.CostForTwo,
-    "Cuisines":request.body.Cuisines,
-    "Ratings":request.body.Ratings,
-    "resName":request.body.resName
+    "costForTwo":request.body.costForTwo,
+    "cuisines":request.body.cuisines,
+    "avgRating":request.body.avgRating,
+    "imageLink":request.body.imageLink,
+    "name":request.body.name
 })
 response.status(201).json({
     "status": "success",

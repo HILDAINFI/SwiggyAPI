@@ -4,16 +4,19 @@ const restaurantSchema = new mongoose.Schema({
     areaName : {
         type : String
     },
-    CostForTwo : {
+    costForTwo : {
         type : String
     },
-    Cuisines: {
+    cuisines: {
         type : Array
     },
-    Ratings: {
+    avgRating: {
         type : Number
     },
-    resName: {
+    imageLink:{
+       type:String
+        },
+    name: {
         type : String
     }
 
